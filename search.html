@@ -59,61 +59,69 @@
             let gType = document.getElementById("type").value.toUpperCase();
             let gBackWood = document.getElementById("backWood").value.toUpperCase().split(' ').join('_');
             let gTopWood = document.getElementById("topWood").value.toUpperCase().split(' ').join('_');
-            
+
             let request = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
             };
             let url = host + "/search?";
-            if(gBuilder) url = url + "&builder=" + gBuilder;
-            if(gModel) url = url + "&model=" + gModel;
-            if(gType) url = url + "&type=" + gType;
-            if(gBackWood) url = url + "&backWood=" + gBackWood;
-            if(gTopWood) url = url + "&topWood=" + gTopWood;
+            if (gBuilder) url = url + "&builder=" + gBuilder;
+            if (gModel) url = url + "&model=" + gModel;
+            if (gType) url = url + "&type=" + gType;
+            if (gBackWood) url = url + "&backWood=" + gBackWood;
+            if (gTopWood) url = url + "&topWood=" + gTopWood;
             url = url.split("?&").join("?");
-            let response = await fetch(url, request);
-            let results = await response.json();
-            let table = document.getElementById("result");
-            table.innerHTML = "";
 
-            for (let res of results) {
-                // Create Elements
-                let row = document.createElement("tr");
-                let serNum = document.createElement("td");
-                let buil = document.createElement("td");
-                let mod = document.createElement("td");
-                let ty = document.createElement("td");
-                let backW = document.createElement("td");
-                let topW = document.createElement("td");
-                let pri = document.createElement("td");
+            try {
 
-                // Get Elements
-                let serialNumber = document.createTextNode(res.serialNumber);
-                let builder = document.createTextNode(res.builder);
-                let model = document.createTextNode(res.model);
-                let type = document.createTextNode(res.type);
-                let backWood = document.createTextNode(res.backWood);
-                let topWood = document.createTextNode(res.topWood);
-                let price = document.createTextNode(res.price);
 
-                // Append to correct children
-                serNum.appendChild(serialNumber);
-                buil.appendChild(builder);
-                mod.appendChild(model)
-                ty.appendChild(type);
-                backW.appendChild(backWood);
-                topW.appendChild(topWood);
-                pri.appendChild(price);
-                row.appendChild(serNum);
-                row.appendChild(buil);
-                row.appendChild(mod);
-                row.appendChild(ty);
-                row.appendChild(backW);
-                row.appendChild(topW);
-                row.appendChild(pri);
-                table.appendChild(row);
+                let response = await fetch(url, request);
+                let results = await response.json();
+                let table = document.getElementById("result");
+                table.innerHTML = "";
+
+                for (let res of results) {
+                    // Create Elements
+                    let row = document.createElement("tr");
+                    let serNum = document.createElement("td");
+                    let buil = document.createElement("td");
+                    let mod = document.createElement("td");
+                    let ty = document.createElement("td");
+                    let backW = document.createElement("td");
+                    let topW = document.createElement("td");
+                    let pri = document.createElement("td");
+
+                    // Get Elements
+                    let serialNumber = document.createTextNode(res.serialNumber);
+                    let builder = document.createTextNode(res.builder);
+                    let model = document.createTextNode(res.model);
+                    let type = document.createTextNode(res.type);
+                    let backWood = document.createTextNode(res.backWood);
+                    let topWood = document.createTextNode(res.topWood);
+                    let price = document.createTextNode(res.price);
+
+                    // Append to correct children
+                    serNum.appendChild(serialNumber);
+                    buil.appendChild(builder);
+                    mod.appendChild(model)
+                    ty.appendChild(type);
+                    backW.appendChild(backWood);
+                    topW.appendChild(topWood);
+                    pri.appendChild(price);
+                    row.appendChild(serNum);
+                    row.appendChild(buil);
+                    row.appendChild(mod);
+                    row.appendChild(ty);
+                    row.appendChild(backW);
+                    row.appendChild(topW);
+                    row.appendChild(pri);
+                    table.appendChild(row);
+                }
+            } catch (error) {
+                let message = "The following error occurred:\n" + error + "\n\nPlease try again or contact the customer support team";
+                alert(message);
             }
         }
 
