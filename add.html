@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <script src="configuration.js"></script>
+    
     <!-- NAVBAR -->
     <ul class="navbar">
         <li><a href="search.html">Search</a></li>
         <li><a href="add.html">Add</a></li>
         <li><a href="about.html">About</a></li>
+        <li><a href="login.html">Login</a></li>
         <li style="float:left"><a class="home" href="index.html">Guitar Inventory Management</a></li>
     </ul>
 
@@ -36,7 +39,7 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        let host = "https://guitar-inventory-management-latest-denv.onrender.com";
+        let host = getHost();
         async function addTheGuitar() {
             // Get all the information we need
             let message = "";
@@ -56,10 +59,12 @@
             console.log("You entered: " + JSON.stringify(guitar));
 
             // build api POST request
+            let token = getTheToken();
             let request = {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
                 },
                 body: JSON.stringify(guitar)
             };
